@@ -1,6 +1,8 @@
 #!/usr/bin/env python3
+import datetime
 import requests
 import os
+
 from bs4 import BeautifulSoup
 from prettytable import PrettyTable
 
@@ -8,6 +10,7 @@ URL = 'https://www.fleaflicker.com/nfl/leagues/{league}/teams/{team}'
 
 
 class Player(object):
+
     def __init__(self, soup):
         player_info = soup.find('div', class_='player')
         self.name = player_info.find('div', attrs={'class': 'player-name'}).find('a', class_='player-text').text
@@ -24,9 +27,29 @@ class Player(object):
         status = soup.find_all('td')[-1].text
         self.taxi = 'TAXI' == status
         self.ir = 'IR' == status
+        self.taxi_eligible = self.fetch_taxi_eligability(player_info)
 
         if self.position in ['S', 'CB']:
             self.position = 'DB'  # I only care about the position they play at in fantasy
+
+    def fetch_taxi_eligability(self, soup):
+        # This is rough, misses undrafted free agents on second year in the league. Still better than nothing
+        # Rookie always eligible
+        if soup.find('div', attrs={'class': 'player-icons'}).find('i', class_='fa-graduation-cap') is not None:
+            return True
+        # 2nd year also eligable
+        plink = soup.find('div', attrs={'class': 'player-name'}).find('a', class_='player-text').get('href')
+        resp = requests.get('https://www.fleaflicker.com/{}'.format(plink))
+        psoup = BeautifulSoup(resp.text, features='html.parser')
+        pinfo = psoup.find('dl', attrs={'class': 'panel-body'})
+
+        draft_info = pinfo.find('strong')
+        if draft_info is None:
+            return False
+        year = draft_info.find_parent('dd').text.split(',')[0]
+        if str(int(datetime.date.today().year) - 1) == year:
+            return True
+        return False
 
     def __str__(self):
         return self.name
@@ -139,6 +162,18 @@ def map_to_injury(players):
     return injury_map
 
 
+def map_taxi_eligible(players):
+    taxi_map = {}
+    for p in players:
+        if not p.taxi_eligible:
+            continue
+        if p.position not in taxi_map:
+            taxi_map[p.position] = [str(p)]
+        else:
+            taxi_map[p.position].append(str(p))
+    return taxi_map
+
+
 def print_report(pmap, title):
     report = PrettyTable()
     for column, players in pmap.items():
@@ -160,6 +195,7 @@ def main():
     print_report(map_to_keeper(players), 'Keeper Report')
     print_report(map_to_bye(players), 'Bye Week Report')
     print_report(map_to_injury(players), 'Injury Report')
+    print_report(map_taxi_eligible(players), 'Taxi Eligibile Report')
 
     print('Total Squad Size: {}'.format(len(players)))
     print('Active Sqaud Size: {}'.format(len(active_players)))
