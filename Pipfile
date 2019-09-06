@@ -4,6 +4,7 @@ url = "https://pypi.org/simple"
 verify_ssl = true
 
 [dev-packages]
+got-fleas = {editable = true,path = "."}
 
 [packages]
 beautifulsoup4 = "*"
