@@ -9,7 +9,7 @@ This project is to interface with fleaflicker and display information about a te
 Since this hasnt been packaged yet, all that is required is to install the requirements and export the TEAM and LEAGUE ids.
 
 ```
-pip install -r requirements.txt
+pipenv install -r requirements.txt
 
 export FLEA_LEAGUE_ID=123456
 export FLEA_TEAM_ID=123456

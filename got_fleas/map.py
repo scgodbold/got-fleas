@@ -58,23 +58,13 @@ def bye(players):
 
 def injury(players):
     injury_map = {}
-    status_map = {
-        'Q': 'Questionable',
-        'OUT': 'Out',
-        'PUP': 'Physically Unable to Play',
-        'D': 'Doubtful',
-        'IR': 'Injury Reserve'
-    }
     for p in players:
         if p.injury_status is None:
             continue
-        translated_status = status_map.get(p.injury_status, 'Other')
-        if translated_status == 'Other':
-            logger.warn('Unknown player injury: [{}] {}'.format(str(p), p.injury_status))
-        if translated_status not in injury_map:
-            injury_map[translated_status] = [str(p)]
+        if p.injury_status not in injury_map:
+            injury_map[p.injury_status] = [str(p)]
         else:
-            injury_map[translated_status].append(str(p))
+            injury_map[p.injury_status].append(str(p))
     return injury_map
 
 
@@ -90,10 +80,37 @@ def taxi(players):
     return taxi_map
 
 
+def age(players):
+    sorted_players = sorted(players, key=lambda x: x.age, reverse=False)
+
+    age_map = {}
+
+    for p in sorted_players:
+        if p.position not in age_map:
+            age_map[p.position] = ['{} ({})'.format(p.name, p.age)]
+        else:
+            age_map[p.position].append('{} ({})'.format(p.name, p.age))
+    return age_map
+
+
+def owned(players):
+    sorted_players = sorted(players, key=lambda x: x.own_percent, reverse=True)
+    owned_map = {}
+
+    for p in sorted_players:
+        if p.position not in owned_map:
+            owned_map[p.position] = ['{} ({})'.format(p.name, p.own_percent)]
+        else:
+            owned_map[p.position].append('{} ({})'.format(p.name, p.own_percent))
+    return owned_map
+
+
 REPORTS = {
     'position': position,
     'keeper': keeper,
     'taxi': taxi,
     'injury': injury,
     'misc': misc,
+    'age': age,
+    'owned': owned,
 }
