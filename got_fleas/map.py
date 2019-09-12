@@ -105,6 +105,19 @@ def owned(players):
     return owned_map
 
 
+def position_rank(players):
+    # Set to theoretically more players then we should care about in total, none will always be bottom
+    sorted_players = sorted(players, key=lambda x: x.position_rank if x.position_rank is not None else 10000, reverse=False)
+    position_map = {}
+
+    for p in sorted_players:
+        if p.position not in position_map:
+            position_map[p.position] = ['{} ({})'.format(p.name, p.position_rank)]
+        else:
+            position_map[p.position].append('{} ({})'.format(p.name, p.position_rank))
+    return position_map
+
+
 REPORTS = {
     'position': position,
     'keeper': keeper,
@@ -113,4 +126,5 @@ REPORTS = {
     'misc': misc,
     'age': age,
     'owned': owned,
+    'position-rank': position_rank,
 }

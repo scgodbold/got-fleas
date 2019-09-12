@@ -12,3 +12,7 @@ def rprint(pmap, title):
     print(title + ':')
     print(report)
     print('')
+
+
+def build(report_str, players):
+    pass

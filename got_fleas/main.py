@@ -4,7 +4,9 @@ import got_fleas.cli
 import got_fleas.config
 import got_fleas.map
 import got_fleas.player
-import got_fleas.reports
+import got_fleas.report
+import got_fleas.categorize
+import got_fleas.sort
 
 
 logger = logging.getLogger('got_fleas')
@@ -16,7 +18,7 @@ def main():
     players = got_fleas.player.get_players_by_manager(config)
 
     for report in config.reports:
-        got_fleas.reports.rprint(got_fleas.map.REPORTS[report](players), report.title())
+        print(got_fleas.report.build(report, players))
 
 
 if __name__ == '__main__':
