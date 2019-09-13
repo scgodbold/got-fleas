@@ -30,7 +30,7 @@ class Config(object):
         self.cache = got_fleas.cache.Cache(self.cache_location,
                                            fetch_delay=self.fetch_delay,
                                            fetch_splay=self.fetch_splay,
-                                          )
+                                           )
 
         # Configure basic logging
         logging.basicConfig(level=logging.getLevelName(self.log_level))
@@ -48,10 +48,7 @@ class Config(object):
             self.player_id = args.player_id
         if args.league_id is not None:
             self.player_id = args.player_id
-        if args.reports == 'all':
-            self.reports = list(got_fleas.map.REPORTS.keys())
-        else:
-            self.reports = [args.reports]
+        self.reports = args.reports
 
         if args.refresh_cache:
             self.refresh = True

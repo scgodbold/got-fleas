@@ -18,7 +18,10 @@ def main():
     players = got_fleas.player.get_players_by_manager(config)
 
     for report in config.reports:
+        logger.warn(report)
+        print(report + ':')
         print(got_fleas.report.build(report, players))
+        print('')
 
 
 if __name__ == '__main__':

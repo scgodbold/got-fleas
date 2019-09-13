@@ -10,7 +10,9 @@ def position(plist):
         if p.position not in grouped:
             grouped[p.position] = {
                 'players': [p],
-                'category': 'Position',
+                'category_name': 'Position',
+                'category_attr': 'position',
+                'category': p.position,
             }
         else:
             grouped[p.position]['players'].append(p)
@@ -26,7 +28,9 @@ def injury(plist):
         if p.injury_status not in grouped:
             grouped[p.injury_status] = {
                 'players': [p],
-                'category': 'Injury Status',
+                'category_name': 'Injury',
+                'category_attr': 'injury_status',
+                'category': p.injury_status,
             }
         else:
             grouped[p.injury_status]['players'].append(p)
@@ -42,7 +46,9 @@ def bye(plist):
         if p.bye_week not in grouped:
             grouped[p.bye_week] = {
                 'players': [p],
-                'category': 'Bye Week',
+                'category_name': 'Bye Week',
+                'category_attr': 'bye_week',
+                'category': p.bye_week,
             }
         else:
             grouped[p.bye_week]['players'].append(p)
@@ -56,7 +62,9 @@ def team(plist):
         if p.team not in grouped:
             grouped[p.team] = {
                 'players': [p],
-                'category': 'Team'
+                'category_name': 'Team',
+                'category_attr': 'team',
+                'category': p.team,
             }
         else:
             grouped[p.team]['players'].append(p)

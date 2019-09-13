@@ -120,20 +120,11 @@ class Player(object):
         state = state + ' - FA' if self.team in ['FA'] else state
         return state
 
-    def ext_player_str(self):
-        string = '{} [{}'.format(self.name, self.position)
-        modifiers = []
-        if self.taxi:
-            modifiers.append('Taxi')
-        if self.ir:
-            modifiers.append('IR')
-        if self.team in ['FA']:
-            modifiers.append('FA')
-        if len(modifiers) > 0:
-            string = string + ' - ' + '|'.join(modifiers) + ']'
-        else:
-            string = string + ']'
-        return string
+    def attr_str(self, attr):
+        attrib_val = self.__dict__.get(attr)
+        if attrib_val is None:
+            return self.name
+        return '{} [{}]'.format(self.name, attrib_val)
 
 
 def get_players_by_manager(config):
