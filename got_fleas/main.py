@@ -2,7 +2,6 @@ import logging
 
 import got_fleas.cli
 import got_fleas.config
-import got_fleas.map
 import got_fleas.player
 import got_fleas.report
 import got_fleas.categorize
@@ -18,7 +17,6 @@ def main():
     players = got_fleas.player.get_players_by_manager(config)
 
     for report in config.reports:
-        logger.warn(report)
         print(report + ':')
         print(got_fleas.report.build(report, players))
         print('')

@@ -3,7 +3,6 @@ import os
 import os.path
 
 import got_fleas.cache
-import got_fleas.map
 
 
 def configure(args):
