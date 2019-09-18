@@ -71,9 +71,23 @@ def team(plist):
     return grouped
 
 
+def fa(plist):
+    logger.debug('categorizing players by free agents')
+    return {
+            'FA': {
+                'players': [p for p in plist if p.team in ['FA']],
+                'category_name': 'Free Agents',
+                'cattegory_attr': 'team',
+                'category': 'Free Agents',
+            }
+
+           }
+
+
 CATEGORIES = {
     'position': position,
     'injury': injury,
     'bye': bye,
     'team': team,
+    'fa': fa,
 }

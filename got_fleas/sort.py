@@ -36,9 +36,18 @@ def injury(data):
         data[k]['players'] = sorted(v['players'], key=lambda x: x.injury_status if x.injury_status is not None else 'a', reverse=True)
 
 
+def age(data):
+    logger.debug('Ordering categories by Age')
+    for k, v in data.items():
+        data[k]['sorted'] = 'age'
+        data[k]['values'] = [x.age for x in v['players']]
+        data[k]['players'] = sorted(v['players'], key=lambda x: x.age, reverse=True)
+
+
 SORT_METHODS = {
     'rank': rank,
     'bye': bye_week,
     'owned': own_percent,
     'injury': injury,
+    'age': age,
 }

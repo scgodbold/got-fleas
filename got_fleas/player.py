@@ -113,13 +113,6 @@ class Player(object):
     def __repr__(self):
         return '{}({}{})'.format(self.name, self.position, self.state())
 
-    def state(self):
-        state = ''
-        state = state + ' - TAXI' if self.taxi else state
-        state = state + ' - IR' if self.ir else state
-        state = state + ' - FA' if self.team in ['FA'] else state
-        return state
-
     def attr_str(self, attr):
         attrib_val = self.__dict__.get(attr)
         if attrib_val is None:
