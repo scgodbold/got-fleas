@@ -18,6 +18,7 @@ class Config(object):
         self.player_id = None
         self.reports = None
         self.refresh = False
+        self.start_year = None
         # Use these
         self.fetch_delay = 500  # ms
         self.fetch_splay = 100  # ms
@@ -41,6 +42,9 @@ class Config(object):
         if os.environ.get('FLEA_LEAGUE_ID') is not None:
             self.league_id = os.environ['FLEA_LEAGUE_ID']
 
+        if os.environ.get('FLEA_START_YEAR') is not None:
+            self.start_year = int(os.environ['FLEA_START_YEAR'])
+
     def read_cli(self, args):
         # Eventually add CLI args for some things, these are of the highest order
         if args.player_id is not None:
@@ -54,6 +58,9 @@ class Config(object):
 
         if args.log_level is not None:
             self.log_level = args.log_level
+
+        if args.start_year is not None:
+            self.start_year = int(args.start_year)
 
     def valid(self):
         if self.league_id is not None:

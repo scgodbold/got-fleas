@@ -84,6 +84,14 @@ def fa(plist):
            }
 
 
+def by_owner(mlist, pid):
+    logger.debug('categorizing matches by owner')
+    categorized = {}
+    for match in mlist:
+        if match
+    return categorized
+
+
 CATEGORIES = {
     'position': position,
     'injury': injury,

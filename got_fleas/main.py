@@ -18,12 +18,11 @@ def main():
     config = got_fleas.config.Config(args)
     league = got_fleas.league.get_league(config)
     matches = got_fleas.match.get_matches(config)
-    return
     players = got_fleas.player.get_players_by_manager(config)
 
     for report in config.reports:
         print(report + ':')
-        print(got_fleas.report.build(report, players))
+        print(got_fleas.report.create_report(report, players, league, matches, config))
         print('')
 
 
