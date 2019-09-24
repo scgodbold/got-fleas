@@ -1,12 +1,12 @@
 import logging
 
-import got_fleas.categorize
-import got_fleas.sort
+import got_fleas.player.categorize
+import got_fleas.player.sort
 
 from prettytable import PrettyTable
 
 
-logger = logging.getLogger('gotfleas.report')
+logger = logging.getLogger('gotfleas.player.report')
 
 
 def players_to_strings(attrib, players):
@@ -37,7 +37,7 @@ def set_column_headers(data, agg_method):
         data[k]['title'] = '{} [{:.2f}]'.format(v['category'], agg_data)
 
 
-def player_report(report_str, players):
+def report(report_str, players):
     # this gets me the "get" method for safe index fetching
     split_str = report_str.split('.')
     report_dict = {i: split_str[i] for i in range(len(split_str))}
@@ -59,23 +59,13 @@ def player_report(report_str, players):
     return generate_report_table(report_data)
 
 
-def owner_report(player_id, query, league, matches):
-    for x in matches:
+# def create_report(query, players, league, matches, config):
+#     split_query = query.split('.')
+#     new_query = '.'.join(split_query[1:])
 
-        logger.warn('{} == {}: {}'.format(x.home_team, player_id, x.home_team == player_id))
-        logger.warn('{} == {}: {}'.format(x.away_team, player_id, x.away_team == player_id))
-    player_matches = [x for x in matches if x.home_team == player_id or x.away_team == player_id]
-    logger.debug('Found {} matches for player {}'.format(len(player_matches, player_id)))
-    return
-
-
-def create_report(query, players, league, matches, config):
-    split_query = query.split('.')
-    new_query = '.'.join(split_query[1:])
-
-    if split_query[0].lower() == 'players':
-        logger.debug('Found player report')
-        return player_report(new_query, players)
-    if split_query[0].lower() == 'owner':
-        logger.debug('Found owner report')
-        return owner_report(config.player_id, new_query, league, matches)
+#     if split_query[0].lower() == 'players':
+#         logger.debug('Found player report')
+#         return player_report(new_query, players)
+#     if split_query[0].lower() == 'owner':
+#         logger.debug('Found owner report')
+#         return owner_report(config.player_id, new_query, league, matches)

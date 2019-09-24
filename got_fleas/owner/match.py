@@ -16,6 +16,10 @@ class Match(object):
         self.away_score = away_soup('td', class_='right')[0].text
 
     @property
+    def tie(self):
+        return self.home_score == self.away_score
+
+    @property
     def winner(self):
         return self.home_team if self.home_score > self.away_score else self.away_team
 
