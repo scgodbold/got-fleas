@@ -1,12 +1,12 @@
 import logging
 
-import got_fleas.categorize
-import got_fleas.sort
+import got_fleas.player.categorize
+import got_fleas.player.sort
 
 from prettytable import PrettyTable
 
 
-logger = logging.getLogger('gotfleas.report')
+logger = logging.getLogger('gotfleas.player.report')
 
 
 def players_to_strings(attrib, players):
@@ -37,7 +37,7 @@ def set_column_headers(data, agg_method):
         data[k]['title'] = '{} [{:.2f}]'.format(v['category'], agg_data)
 
 
-def build(report_str, players):
+def report(report_str, players):
     # this gets me the "get" method for safe index fetching
     split_str = report_str.split('.')
     report_dict = {i: split_str[i] for i in range(len(split_str))}
@@ -57,3 +57,15 @@ def build(report_str, players):
 
     # This builds the physical report
     return generate_report_table(report_data)
+
+
+# def create_report(query, players, league, matches, config):
+#     split_query = query.split('.')
+#     new_query = '.'.join(split_query[1:])
+
+#     if split_query[0].lower() == 'players':
+#         logger.debug('Found player report')
+#         return player_report(new_query, players)
+#     if split_query[0].lower() == 'owner':
+#         logger.debug('Found owner report')
+#         return owner_report(config.player_id, new_query, league, matches)

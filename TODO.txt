@@ -1,0 +1,6 @@
+* Only fetch data that is needed
+* Lifetime cache matchup pages
+* Regular season vs. Play off stats
+* Draft % people owned
+* Format for discord
+* Add discord integration bot

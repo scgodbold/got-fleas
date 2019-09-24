@@ -43,10 +43,16 @@ class Cache(object):
 
     def _cache_path(self, url):
         parsed_url = urllib.parse.urlparse(url)
-        return '{}/{}/{}'.format(self.location,
-                                 parsed_url.netloc,
-                                 parsed_url.path,
-                                 ).replace('//', '/')
+        if parsed_url.query == '':
+            return '{}/{}/{}'.format(self.location,
+                                     parsed_url.netloc,
+                                     parsed_url.path,
+                                     ).replace('//', '/')
+        return '{}/{}/{}/{}'.format(self.location,
+                                    parsed_url.netloc,
+                                    parsed_url.path,
+                                    parsed_url.query,
+                                    ).replace('//', '/')
 
     def _read_cache(self, path, refresh):
         # If we explicitly want to refresh just bypass this
