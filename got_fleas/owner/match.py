@@ -12,8 +12,8 @@ class Match(object):
         away_string = (away_soup('div', class_='league-name')[0].find('a').get('href')).split('/')[-1]
         self.away_team = away_string if '?' not in away_string else away_string.split('?')[0]
         self.match_week = matchup_week
-        self.home_score = home_soup('td', class_='right')[0].text
-        self.away_score = away_soup('td', class_='right')[0].text
+        self.home_score = float(home_soup('td', class_='right')[0].text)
+        self.away_score = float(away_soup('td', class_='right')[0].text)
 
     @property
     def tie(self):
